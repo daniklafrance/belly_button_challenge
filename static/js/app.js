@@ -46,12 +46,26 @@ function defaultPlots(selectedPatient) {
 
     let bubbleData = [trace2];
 
-    let layout = {
+    let layout2 = {
       title: 'title',
       showlegend: true,
     };
 
-    Plotly.newPlot("bubble", bubbleData, layout);
+    Plotly.newPlot("bubble", bubbleData, layout2);
   });
 }
 
+//demographic info panel
+function demoPanel(selectedPatient) {
+  d3.json("samples.json").then((data) => {
+    let demoData = data.metadata;
+    let patient = demoData.filter(
+      (samplePatient) => samplePatient.id == selectedPatient
+    )[0];
+    let demoPanelBox = d3.select("#sample-metadata");
+    demoPanelBox.html("");
+    Object.entries(patient).forEach(([key, value]) => {
+      demoPanelBox.append("h5").text('${key}: ${value}');
+    });
+  });
+}
