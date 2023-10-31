@@ -1,4 +1,4 @@
-//set up page with default plots
+//set up default plots, data variables created
 function defaultPlots(selectedPatient) {
   d3.json("samples.json").then((data) => {
     let plotData = data.samples;
@@ -7,6 +7,7 @@ function defaultPlots(selectedPatient) {
     )[0];
 
     console.log(patient);
+
     let ids = patient.otu_ids;
     let labels = patient.otu_labels;
     let values = patient.sample_values;
@@ -20,7 +21,7 @@ function defaultPlots(selectedPatient) {
       orientation: "h"
     };
 
-    let bardata = [trace1];
+    let barData = [trace1];
 
     let layout = {
       title: 'title',
@@ -28,7 +29,7 @@ function defaultPlots(selectedPatient) {
       yaxis: {autorange: true},
     }
 
-    Plotly.newPlot("bar", bardata, layout);
+    Plotly.newPlot("bar", barData, layout);
 
 //bubble chart
     let trace2 = {
@@ -39,9 +40,18 @@ function defaultPlots(selectedPatient) {
       marker: {
         size: values,
         color: ids,
+        showscale: true,
       }
     };
 
+    let bubbleData = [trace2];
+
+    let layout = {
+      title: 'title',
+      showlegend: true,
+    };
+
+    Plotly.newPlot("bubble", bubbleData, layout);
   });
 }
 
