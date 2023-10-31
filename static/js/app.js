@@ -69,3 +69,26 @@ function demoPanel(selectedPatient) {
     });
   });
 }
+
+function init() {
+  d3.json("samples.json").then(function (data) {
+    console.log("samples.json:", data);
+
+    let dropDown = d3.select('#selDataset');
+
+    data.names.forEach((name) => {
+      dropDown.append('option').text(name).property('value', name;)
+    });
+
+    const firstPatient = data.names[0];
+    defaultPlots(firstPatient);
+    demoPanel(firstPatient);
+  });
+}
+
+function nextPatient(newPatient) {
+  defaultPlots(newPatient);
+  demoPanel(newPatient);
+}
+
+init();
