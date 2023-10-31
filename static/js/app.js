@@ -30,6 +30,18 @@ function defaultPlots(selectedPatient) {
 
     Plotly.newPlot("bar", bardata, layout);
 
+//bubble chart
+    let trace2 = {
+      x: ids,
+      y: values,
+      text: labels,
+      mode: 'markers',
+      marker: {
+        size: values,
+        color: ids,
+      }
+    };
+
   });
 }
 
