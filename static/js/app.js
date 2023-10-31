@@ -9,7 +9,6 @@ function defaultPlots(selectedPatient) {
     )[0];
 
     console.log(patient);
-
     let ids = patient.otu_ids;
     let labels = patient.otu_labels;
     let values = patient.sample_values;
@@ -50,7 +49,7 @@ function defaultPlots(selectedPatient) {
 
     let layout2 = {
       title: 'title',
-      showlegend: true,
+      showlegend: false,
     };
 
     Plotly.newPlot("bubble", bubbleData, layout2);
