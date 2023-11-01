@@ -50,11 +50,7 @@ function barPlot(newPatient) {
 
     let barData = [barChart];
 
-    let layout = {
-      title: 'title',
-    };
-
-    Plotly.newPlot("bar", barData, layout);
+    Plotly.newPlot("bar", barData);
   });
 };
 
