@@ -83,11 +83,7 @@ function bubblePlot(newPatient) {
 
     let bubbleData = [bubbleChart];
 
-    let layout1 = {
-      title: 'title',
-    };
-
-    Plotly.newPlot("bubble", bubbleData, layout1);
+    Plotly.newPlot("bubble", bubbleData);
   });
 };
 
