@@ -1,39 +1,63 @@
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
 
-//set up default plots, data variables created
-function defaultPlots(selectedPatient) {
+//demographic info panel
+function demoPanel(newPatient) {
   d3.json(url).then((data) => {
-    let plotData = data.samples;
-    let patient = plotData.filter(
-      (samplePatient) => samplePatient.id == selectedPatient
-    )[0];
+    let demoData = data.metadata;
+    let patient = demoData.filter((item) => item.id == newPatient);
+    let patientData = patient[0]
+    d3.select("#sample-metadata").html("");
+    Object.entries(patientData).forEach(([key,value]) => {
+      d3.select("#sample-metadata").append("h5").text(`${key}: ${value}`);
+    });
+  });
+}
 
-    console.log(patient);
-    let ids = patient.otu_ids;
-    let labels = patient.otu_labels;
-    let values = patient.sample_values;
+//set up plots, data variables created
+function barPlot(newPatient) {
+  d3.json(url).then((data) => {
+
+    let plotData = data.samples;   
+    let patient = plotData.filter(item => item.id == newPatient);    
+    let patientData = patient2[0]
+
+    let ids = patientData.otu_ids;
+    let labels = patientData.otu_labels;
+    let values = patientData.sample_values;
 
 //bar chart
-    let trace1 = {
+    let barChart = {
       x: values.slice(0, 10).reverse(),
-      y: ids.slice(0, 10).map((otuID) => 'OTU ${otuID}').reverse(),
+      y: ids.slice(0, 10).map(id => `OTU ${id}`).reverse(),
       text: labels.slice(0, 10).reverse(),
       type: "bar",
       orientation: "h"
     };
 
-    let barData = [trace1];
+    let barData = [barChart];
 
     let layout = {
       title: 'title',
-      xaxis: {autorange: true},
-      yaxis: {autorange: true},
-    }
+    };
 
     Plotly.newPlot("bar", barData, layout);
+  });
+}
 
 //bubble chart
-    let trace2 = {
+function bubblePlot(newPatient) {
+  d3.json(url).then((data) => {
+
+    let bubbleplotData = data.samples;   
+    let patient = bubbleplotData.filter(item => item.id == newPatient);    
+    let patientData = patient[0]
+
+    let ids = patientData.otu_ids;
+    let labels = patientData.otu_labels;
+    let values = patientData.sample_values;
+
+
+    let bubbleChart = {
       x: ids,
       y: values,
       text: labels,
@@ -43,52 +67,37 @@ function defaultPlots(selectedPatient) {
         color: ids,
         showscale: true,
       }
-    };
+    }
 
-    let bubbleData = [trace2];
+    let bubbleData = [bubbleChart];
 
-    let layout2 = {
+    let layout1 = {
       title: 'title',
-      showlegend: false,
     };
 
-    Plotly.newPlot("bubble", bubbleData, layout2);
-  });
-}
-
-//demographic info panel
-function demoPanel(selectedPatient) {
-  d3.json(url).then((data) => {
-    let demoData = data.metadata;
-    let patient = demoData.filter(
-      (samplePatient) => samplePatient.id == selectedPatient
-    )[0];
-    let demoPanelBox = d3.select("#sample-metadata");
-    demoPanelBox.html("");
-    Object.entries(patient).forEach(([key,value]) => {
-      demoPanelBox.append("h5").text('${key}: ${value}');
-    });
+    Plotly.newPlot("bubble", bubbleData, layout1);
   });
 }
 
 function init() {
-  d3.json(url).then(function (data) {
-    console.log('url:', data);
 
-    let dropDown = d3.select('#selDataset');
+  let dropDown = d3.select('#selDataset');
 
+  d3.json(url).then((data) =>{
     data.names.forEach((name) => {
       dropDown.append('option').text(name).property('value', name);
     });
 
-    const firstPatient = data.names[0];
-    defaultPlots(firstPatient);
-    demoPanel(firstPatient);
+    let firstPatient = data.names[0];
+      barPlot(firstPatient);
+      bubblePlot(firstPatient);
+      demoPanel(firstPatient);
   });
 }
 
-function nextPatient(newPatient) {
-  defaultPlots(newPatient);
+function refresh(newPatient) {
+  barPlot(newPatient);
+  bubblePlot(newPatient);
   demoPanel(newPatient);
 }
 
