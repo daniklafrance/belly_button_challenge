@@ -15,6 +15,7 @@ function demoPanel(newPatient) {
     let demoData = data.metadata;
     let patient = demoData.filter(item => item.id == newPatient);
     let patientData = patient[0]
+    console.log(patientData);
 
 //use d3 to make changes to html code
     d3.select("#sample-metadata").html("");
@@ -33,6 +34,7 @@ function barPlot(newPatient) {
     let plotData = data.samples;   
     let patient = plotData.filter(item => item.id == newPatient);    
     let patientData = patient[0]
+    console.log(patientData);
 
 //variables for specific data from selection    
     let ids = patientData.otu_ids;
@@ -63,7 +65,8 @@ function bubblePlot(newPatient) {
     let bubbleplotData = data.samples;   
     let patient = bubbleplotData.filter(item => item.id == newPatient);    
     let patientData = patient[0]
-
+    console.log(patientData);
+    
 //variables for specific data from selection   
     let ids = patientData.otu_ids;
     let labels = patientData.otu_labels;
