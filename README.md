@@ -46,13 +46,15 @@ Use otu_labels for the text values.
 
 * Deploy your app to a free static page hosting service, such as GitHub Pages. Submit the links to your deployment and your GitHub repo. Ensure that your repository has regular commits and a thorough README.md file
 
-### Dependencies
+## Requirements
 
-* from pymongo import MongoClient
-* from pprint import pprint
-* from pymongo import MongoClient
-* from pprint import pprint
-* import pandas as pd
+#### Bar Chart (30 points)
+
+* Chart initializes without error (10 points)
+* Chart updates when a new sample is selected (5 points)
+* Chart uses Top 10 sample values as values (5 points)
+* Chart uses otu_ids as the labels (5 points)
+* Chart uses otu_labels as the tooltip (5 points)
 
 ## Authors
 
